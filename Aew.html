@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPINER SPORTS PHYSIO - สไลด์นำเสนอ</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --navy-dark: #0a152e;
+            --navy: #112349;
+            --navy-light: #183163;
+            --red: #dc2626;
+            --red-dark: #b91c1c;
+            --blue: #2563eb;
+            --cyan: #0891b2;
+            --indigo: #312e81;
+            --emerald: #059669;
+            --amber: #d97706;
+            --slate-900: #0f172a;
+            --bg: #f2f6fa;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: var(--navy-dark);
+            color: var(--slate-900);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            scroll-behavior: smooth;
+        }
+
+        /* Slide Container */
+        .slides-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Individual Slide */
+        .slide {
+            min-height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot:hover {
+            background: rgba(255,255,255,0.6);
+            transform: scale(1.3);
+        }
+
+        .nav-dot.active {
+            background: var(--red);
+            border-color: var(--red);
+            box-shadow: 0 0 15px rgba(220,38,38,0.6);
+        }
+
+        .nav-dot-label {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            background: var(--navy-dark);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .nav-dot:hover .nav-dot-label {
+            opacity: 1;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(15,23,42,0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInOut 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Slide-specific backgrounds */
+        .slide-0 {
+            background: linear-gradient(180deg, #183163 0%, #0b1c3b 50%, #f2f6fa 100%);
+            color: white;
+        }
+
+        .slide-1 {
+            background: #f2f6fa;
+        }
+
+        .slide-2 {
+            background: linear-gradient(180deg, #0b1c3b 0%, #122346 100%);
+            color: white;
+        }
+
+        .slide-3 {
+            background: #f2f6fa;
+        }
+
+        .slide-4 {
+            background: linear-gradient(180deg, #f2f6fa 0%, #e6ecf4 100%);
+        }
+
+        .slide-5 {
+            background: #f2f6fa;
+        }
+
+        .slide-6 {
+            background: linear-gradient(180deg, #112349 0%, #0a152e 100%);
+            color: #94a3b8;
+        }
+
+        /* Typography Utilities */
+        .font-caveat {
+            font-family: 'Caveat', cursive;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #dc2626, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass Morphism */
+        .glass {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .glass-dark {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Alpine Elements */
+        .swiss-cross {
+            position: relative;
+            width: 3rem;
+            height: 3rem;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: 0 0 30px rgba(220,38,38,0.6);
+            flex-shrink: 0;
+        }
+
+        .swiss-cross::before {
+            content: '';
+            width: 55%;
+            height: 18%;
+            background: white;
+            border-radius: 2px;
+            position: absolute;
+        }
+
+        .swiss-cross::after {
+            content: '';
+            width: 18%;
+            height: 55%;
+            background: white;
+            border-radius: 2px;
+            position: absolute;
+        }
+
+        .swiss-cross-sm {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-width: 2px;
+        }
+
+        .swiss-cross-lg {
+            width: 4rem;
+            height: 4rem;
+            border-width: 4px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 2px solid;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            border: 2px solid #e2e8f0;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        /* Button Tab */
+        .tab-btn {
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.7);
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .tab-btn.active {
+            background: var(--red);
+            border-color: white;
+            color: white;
+            box-shadow: 0 0 20px rgba(220,38,38,0.5);
+            transform: translateY(-3px);
+        }
+
+        .tab-btn .tab-letter {
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* Injury Selector */
+        .injury-btn {
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: left;
+            width: 100%;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .injury-btn:hover {
+            background: #f8fafc;
+        }
+
+        .injury-btn.selected {
+            background: var(--slate-900);
+            color: white;
+            border-color: var(--slate-900);
+            box-shadow: 0 10px 30px rgba(15,23,42,0.3);
+            transform: scale(1.02);
+        }
+
+        /* Alpine SVG Mountain */
+        .mountain-svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            max-width: 56rem;
+            height: 55vh;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-5 {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 0.4rem;
+            }
+            
+            .tab-btn {
+                padding: 0.5rem 0.3rem;
+                font-size: 0.6rem;
+            }
+            
+            .tab-btn .tab-letter {
+                font-size: 1.1rem;
+            }
+            
+            .mountain-svg {
+                height: 35vh;
+            }
+
+            .nav-dots {
+                right: 0.5rem;
+                gap: 0.7rem;
+            }
+
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 20px rgba(220,38,38,0.4); }
+            50% { box-shadow: 0 0 40px rgba(220,38,38,0.8); }
+        }
+
+        .animate-pulse-red {
+            animation: pulse-red 2s ease-in-out infinite;
+        }
+
+        /* Scrollbar */
+        .slides-container::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* Image container */
+        .img-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,0.8), transparent);
+        }
+
+        /* Hero Text Overlay */
+        .hero-recovery-text {
+            position: absolute;
+            font-weight: 900;
+            font-size: clamp(4rem, 15vw, 12rem);
+            line-height: 1;
+            color: rgba(255,255,255,0.04);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 1;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Step progress bar */
+        .step-progress {
+            height: 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots" id="navDots">
+        <div class="nav-dot active" data-slide="0">
+            <span class="nav-dot-label">Home</span>
+        </div>
+        <div class="nav-dot" data-slide="1">
+            <span class="nav-dot-label">Injuries</span>
+        </div>
+        <div class="nav-dot" data-slide="2">
+            <span class="nav-dot-label">POLICE</span>
+        </div>
+        <div class="nav-dot" data-slide="3">
+            <span class="nav-dot-label">Rehab</span>
+        </div>
+        <div class="nav-dot" data-slide="4">
+            <span class="nav-dot-label">Case Study</span>
+        </div>
+        <div class="nav-dot" data-slide="5">
+            <span class="nav-dot-label">Takeaways</span>
+        </div>
+        <div class="nav-dot" data-slide="6">
+            <span class="nav-dot-label">End</span>
+        </div>
+    </div>
+
+    <!-- Keyboard Hint -->
+    <div class="keyboard-hint" id="keyboardHint">
+        ⬆ ⬇ เลื่อนสไลด์ &nbsp;|&nbsp; คลิกจุดด้านขวาเพื่อข้าม
+    </div>
+
+    <!-- Slides Container -->
+    <div class="slides-container" id="slidesContainer">
+
+        <!-- ==================== SLIDE 0: HERO ==================== -->
+        <section class="slide slide-0" id="slide-0">
+            <!-- Background Pattern -->
+            <div style="position:absolute;inset:0;opacity:0.15;background:radial-gradient(#ffffff 1px,transparent 1px);background-size:24px 24px;pointer-events:none;z-index:0;"></div>
+
+            <!-- Giant RECOVERY text -->
+            <div class="hero-recovery-text">RECOVERY</div>
+
+            <!-- Alpine Mountain SVG -->
+            <div class="mountain-svg" style="display:flex;justify-content:center;align-items:flex-end;">
+                <svg viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;filter:drop-shadow(0 20px 50px rgba(11,28,59,0.3));">
+                    <polygon points="500,80 150,600 850,600" fill="#0b1c3b"/>
+                    <polygon points="500,80 550,600 850,600" fill="#061226"/>
+                    <polygon points="500,80 440,220 480,240 500,220 530,240 560,220" fill="#f8fafc"/>
+                    <polygon points="500,80 500,220 530,240 560,220" fill="#cbd5e1"/>
+                    <path d="M440 220 L350 400 L390 410 L460 280 Z" fill="#e2e8f0" opacity="0.4"/>
+                    <path d="M560 220 L650 420 L620 430 L540 270 Z" fill="#94a3b8" opacity="0.4"/>
+                </svg>
+            </div>
+
+            <!-- Swiss Cross over peak -->
+            <div style="position:absolute;top:18%;left:50%;transform:translateX(-50%);z-index:5;" class="animate-pulse-red">
+                <div class="swiss-cross swiss-cross-lg"></div>
+            </div>
+
+            <!-- The Ascent cursive -->
+            <div style="position:absolute;bottom:25%;z-index:5;text-align:center;width:100%;">
+                <h2 class="font-caveat" style="font-size:clamp(3rem,9vw,8rem);color:#dc2626;font-weight:700;text-shadow:0 4px 20px rgba(0,0,0,0.5);">
+                    the Ascent
+                </h2>
+            </div>
+
+            <!-- Bottom fade -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:8rem;background:linear-gradient(to top,#f2f6fa,transparent);z-index:4;pointer-events:none;"></div>
+
+            <!-- Hero Text Content -->
+            <div style="position:relative;z-index:10;text-align:center;max-width:48rem;margin-top:-5rem;">
+                <div class="badge" style="background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-color:rgba(255,255,255,0.2);color:white;margin-bottom:1rem;">
+                    <span style="color:#f87171;">◆</span> CLINICAL SPORTS REHABILITATION COURSE
+                </div>
+                <h1 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:900;letter-spacing:-0.02em;text-transform:uppercase;line-height:1.2;">
+                    วิทยาศาสตร์การกีฬา<br>และการกายภาพบำบัด
+                </h1>
+                <p style="font-size:0.75rem;color:#cbd5e1;font-weight:600;letter-spacing:0.05em;margin-top:0.5rem;">
+                    "กู้ชีพ บรรเทาอักเสบ และพิชิตยอดเขาสมรรถภาพสูงสุดร่วมกับสหวิชาชีพ"
+                </p>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 1: INJURIES ==================== -->
+        <section class="slide slide-1" id="slide-1">
+            <div style="max-width:80rem;width:100%;">
+                <!-- Section Header -->
+                <div style="text-align:center;margin-bottom:3rem;">
+                    <span class="badge" style="background:#fee2e2;color:#dc2626;border-color:#dc2626;">01 / PATHOLOGY</span>
+                    <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:#0f172a;margin-top:0.5rem;">
+                        อาการบาดเจ็บยอดฮิตในสนามกีฬา
+                    </h2>
+                    <p style="color:#64748b;font-size:0.85rem;font-weight:500;max-width:40rem;margin:0.5rem auto 0;">
+                        การจะฟื้นคืนกำลังให้กลับมาแกร่งดั่งภูเขาหิน นักฟิสิโอต้องเริ่มวิเคราะห์พยาธิสภาพข้อต่อกล้ามเนื้อให้แจ่มแจ้งแยกประเภทให้ชัดเจน
+                    </p>
+                </div>
+
+                <!-- Content Grid -->
+                <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:2rem;align-items:stretch;">
+                    <!-- Left: Injury Tabs -->
+                    <div style="display:flex;flex-direction:column;gap:0.8rem;justify-content:center;">
+                        <h4 style="font-size:0.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;padding-left:0.5rem;">
+                            ระบุพยาธิสภาพการเจ็บป่วย:
+                        </h4>
+                        <button class="injury-btn selected" data-injury="sprain" onclick="selectInjury('sprain', this)">
+                            <div style="width:2.5rem;height:2.5rem;background:#dc2626;border-radius:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i data-lucide="activity" style="width:1.2rem;height:1.2rem;color:white;"></i>
+                            </div>
+                            <div>
+                                <span style="font-weight:800;font-size:0.9rem;display:block;">Sprain</span>
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">แผลฉีกเฉียบพลัน</span>
+                            </div>
+                            <i data-lucide="chevron-right" style="margin-left:auto;width:1rem;height:1rem;color:#dc2626;"></i>
+                        </button>
+                        <button class="injury-btn" data-injury="strain" onclick="selectInjury('strain', this)">
+                            <div style="width:2.5rem;height:2.5rem;background:#2563eb;border-radius:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i data-lucide="heart-pulse" style="width:1.2rem;height:1.2rem;color:white;"></i>
+                            </div>
+                            <div>
+                                <span style="font-weight:800;font-size:0.9rem;display:block;">Strain</span>
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">กล้ามเนื้อฉีกขาด</span>
+                            </div>
+                            <i data-lucide="chevron-right" style="margin-left:auto;width:1rem;height:1rem;color:#94a3b8;"></i>
+                        </button>
+                        <button class="injury-btn" data-injury="contusion" onclick="selectInjury('contusion', this)">
+                            <div style="width:2.5rem;height:2.5rem;background:#0f172a;border-radius:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i data-lucide="shield-alert" style="width:1.2rem;height:1.2rem;color:white;"></i>
+                            </div>
+                            <div>
+                                <span style="font-weight:800;font-size:0.9rem;display:block;">Contusion</span>
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">ห้อเลือดใต้ผิว</span>
+                            </div>
+                            <i data-lucide="chevron-right" style="margin-left:auto;width:1rem;height:1rem;color:#94a3b8;"></i>
+                        </button>
+                        <button class="injury-btn" data-injury="cramp" onclick="selectInjury('cramp', this)">
+                            <div style="width:2.5rem;height:2.5rem;background:#d97706;border-radius:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i data-lucide="flame" style="width:1.2rem;height:1.2rem;color:white;"></i>
+                            </div>
+                            <div>
+                                <span style="font-weight:800;font-size:0.9rem;display:block;">Cramp</span>
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">กล้ามเนื้อหดตัวเฉียบพลัน</span>
+                            </div>
+                            <i data-lucide="chevron-right" style="margin-left:auto;width:1rem;height:1rem;color:#94a3b8;"></i>
+                        </button>
+                    </div>
+
+                    <!-- Right: Detail Card -->
+                    <div class="card" style="padding:2rem;position:relative;overflow:hidden;" id="injuryDetail">
+                        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#dc2626,#2563eb,#312e81);"></div>
+                        <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
+                            <div style="flex:1;min-width:200px;">
+                                <span id="injuryBadge" class="badge" style="background:#dc2626;color:white;border-color:#dc2626;">แผลฉีกเฉียบพลัน</span>
+                                <h3 id="injuryName" style="font-size:1.5rem;font-weight:900;color:#0f172a;margin:0.8rem 0;">Sprain (ข้อเท้าแพลง/เอ็นยึด)</h3>
+                                <p id="injuryDesc" style="font-size:0.8rem;color:#475569;line-height:1.6;">
+                                    เกิดกับเอ็นกระดูก (Ligament) ที่ยึดเชื่อมระหว่างกระดูกกับกระดูก มักมีสาเหตุหลักมาจากการบิดหมุนข้อเท้าอย่างรุนแรงกะทันหัน มีความรุนแรงตั้งแต่เส้นใยยืดตัวไปจนถึงฉีกขาดสมบูรณ์
+                                </p>
+                                <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #f1f5f9;">
+                                    <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:#64748b;font-weight:700;">
+                                        <div style="width:0.6rem;height:0.6rem;background:#dc2626;border-radius:50%;"></div>
+                                        <span>จุดสำคัญ: <strong style="color:#0f172a;">ต้องงดนวดคลึงเฉียบพลัน</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="img-frame" style="width:45%;min-width:200px;height:14rem;">
+                                <img id="injuryImg" src="https://images.unsplash.com/photo-1597851065532-055f97d12e47?q=80&w=600&auto=format&fit=crop" alt="ภาพจำลองการเจ็บป่วย">
+                                <div class="img-overlay"></div>
+                                <div style="position:absolute;bottom:0.8rem;left:0.8rem;color:white;z-index:2;">
+                                    <p style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#f87171;">Biological Record</p>
+                                    <p style="font-size:0.7rem;font-weight:800;">ภาพจำลองการเจ็บป่วยทางโครงสร้าง</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 2: POLICE PROTOCOL ==================== -->
+        <section class="slide slide-2" id="slide-2">
+            <div style="max-width:80rem;width:100%;">
+                <!-- Section Header -->
+                <div style="text-align:center;margin-bottom:2.5rem;">
+                    <span class="badge" style="background:rgba(37,99,235,0.15);color:#60a5fa;border-color:#60a5fa;">02 / EMERGENCY PROTOCOL</span>
+                    <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:white;margin-top:0.5rem;">
+                        ปฐมพยาบาลระดับสูงด้วย POLICE
+                    </h2>
+                    <p style="color:#cbd5e1;font-size:0.8rem;font-weight:600;max-width:42rem;margin:0.5rem auto 0;">
+                        อัปเกรดความมั่นคงกระดูกและกล้ามเนื้อกะทันหัน ด้วยระบบการรักษายุคใหม่ที่มุ่งเน้นการขยับกล้ามเนื้ออย่างฉลาด
+                    </p>
+                </div>
+
+                <div class="glass-dark" style="border-radius:1.5rem;padding:2rem;">
+                    <!-- PRICE vs POLICE info -->
+                    <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:2rem;align-items:center;margin-bottom:2rem;padding:1.5rem;background:rgba(255,255,255,0.05);border-radius:1rem;border:1px solid rgba(255,255,255,0.1);">
+                        <div>
+                            <span class="badge" style="background:#dc2626;color:white;border-color:white;">SWISS CLINICAL RESEARCH</span>
+                            <h3 style="font-size:1.3rem;font-weight:900;color:white;margin:0.8rem 0;">
+                                เหตุใด POLICE จึงกู้ชีพเนื้อเยื่อและข้อต่อได้ดีกว่า PRICE?
+                            </h3>
+                            <p style="font-size:0.8rem;color:#cbd5e1;line-height:1.6;">
+                                หลักสูตรเดิมเคยสอนให้เรานอนพักนิ่งๆ <span style="color:#f87171;font-weight:700;">"Rest (R)"</span> จนกว่าจะหายบวม แต่อาการนอนนิ่งเฉยนอกรันเวย์สนามกลับเป็นตัวการสำคัญทำให้กล้ามเนื้อฝ่อเร็วดั่งหิมะละลาย วิทยาศาสตร์การกีฬายุคใหม่จึงเติมระบบ <strong>"Optimal Loading (OL)"</strong> เข้าไปแทนเพื่อให้ร่างกายตอบสนองต่อแรงกดและการขยับเบาๆ ต่ำกว่าขีดเจ็บ ซึ่งจะช่วยเร่งกระตุ้นคอลลาเจนใหม่ให้สมานและฟื้นตัวอย่างแข็งแกร่งสูงสุด
+                            </p>
+                        </div>
+                        <div class="img-frame" style="height:12rem;">
+                            <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=600&auto=format&fit=crop" alt="กู้ชีพบาดเจ็บด้วย POLICE" loading="lazy">
+                            <div class="img-overlay"></div>
+                            <span style="position:absolute;bottom:0.8rem;left:0.8rem;background:#dc2626;color:white;font-weight:800;font-size:0.65rem;padding:0.3rem 0.7rem;border-radius:0.3rem;border:1px solid white;z-index:2;">RESCUE BASE CAMP</span>
+                        </div>
+                    </div>
+
+                    <!-- POLICE Step Selector -->
+                    <div>
+                        <h4 style="font-size:0.8rem;font-weight:800;color:#cbd5e1;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;">
+                            ◆ คลิกเลือกขั้นตอนปฐมพยาบาลเพื่อศึกษาอย่างละเอียด:
+                        </h4>
+                        <div class="grid-5" style="margin-bottom:1.5rem;">
+                            <button class="tab-btn active" data-police="P" onclick="selectPolice('P', this)">
+                                <span class="tab-letter">P</span>
+                                <span>Protect</span>
+                            </button>
+                            <button class="tab-btn" data-police="OL" onclick="selectPolice('OL', this)">
+                                <span class="tab-letter">OL</span>
+                                <span>Optimal Load</span>
+                            </button>
+                            <button class="tab-btn" data-police="I" onclick="selectPolice('I', this)">
+                                <span class="tab-letter">I</span>
+                                <span>Ice</span>
+                            </button>
+                            <button class="tab-btn" data-police="C" onclick="selectPolice('C', this)">
+                                <span class="tab-letter">C</span>
+                                <span>Compress</span>
+                            </button>
+                            <button class="tab-btn" data-police="E" onclick="selectPolice('E', this)">
+                                <span class="tab-letter">E</span>
+                                <span>Elevate</span>
+                            </button>
+                        </div>
+
+                        <!-- Police Detail -->
+                        <div id="policeDetail" style="background:white;color:#0f172a;padding:1.5rem;border-radius:1rem;border:2px solid rgba(255,255,255,0.1);">
+                            <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;">
+                                <span style="background:#dc2626;color:white;width:2rem;height:2rem;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.8rem;border:2px solid white;">P</span>
+                                <h5 style="font-weight:800;font-size:1rem;">Protect (ป้องกันแผล)</h5>
+                            </div>
+                            <p style="font-size:0.8rem;color:#475569;line-height:1.6;">
+                                หยุดเล่นทันที และปกป้องส่วนข้อต่อที่ได้รับบาดเจ็บด้วยเฝือกอ่อน อุปกรณ์ประคองข้อ หรือไม้พยุง เพื่อสกัดกั้นการฉีกขาดของเนื้อเยื่อเสียหายเพิ่มเติม
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 3: REHAB TRAILS ==================== -->
+        <section class="slide slide-3" id="slide-3">
+            <div style="max-width:80rem;width:100%;">
+                <!-- Section Header -->
+                <div style="text-align:center;margin-bottom:2.5rem;">
+                    <span class="badge" style="background:#dbeafe;color:#2563eb;border-color:#60a5fa;">03 / REHABILITATION TRAILS</span>
+                    <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:#0f172a;margin-top:0.5rem;">
+                        เส้นทางพิชิตยอดเขาแห่งการฟื้นฟู
+                    </h2>
+                    <p style="color:#64748b;font-size:0.8rem;font-weight:600;max-width:40rem;margin:0.5rem auto 0;">
+                        เปรียบเทียบกระบวนการหายเจ็บของกล้ามเนื้อเหมือนการค่อยๆ ไต่ระดับจากแคมป์ฐานล่าง (Basecamp) ไปสู่ยอดเขาสูงสูงสุด (Summit) อย่างปลอดภัย
+                    </p>
+                </div>
+
+                <!-- 3 Phase Cards -->
+                <div class="grid-3" style="gap:2rem;">
+                    <!-- Phase 1 -->
+                    <div class="card" style="position:relative;overflow:hidden;border-top:4px solid #dc2626;">
+                        <div style="position:absolute;top:0;right:0;height:3px;width:100%;background:#f1f5f9;">
+                            <div style="height:100%;width:33%;background:#dc2626;"></div>
+                        </div>
+                        <div style="padding-top:0.5rem;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.8rem;border-bottom:2px dashed #f1f5f9;">
+                                <span style="font-size:0.7rem;font-weight:800;color:#dc2626;border:2px solid #dc2626;padding:0.2rem 0.7rem;border-radius:0.3rem;background:#fef2f2;">วันที่ 1 - 5 (เฉียบพลัน)</span>
+                                <span style="font-size:1.2rem;font-weight:900;color:#cbd5e1;">STG 01</span>
+                            </div>
+                            <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin:0.8rem 0;">Basecamp: เคลียร์การอักเสบ</h3>
+                            <p style="font-size:0.75rem;color:#64748b;line-height:1.5;">เน้นสกัดกั้นและบรรเทาความปวดอุ่นร้อนที่แผล จัดการบวมตึงด้วยความเย็นเลเซอร์กายภาพบำบัด</p>
+                            <div style="background:#f8fafc;padding:0.8rem;border-radius:0.8rem;margin-top:0.8rem;">
+                                <span style="font-size:0.6rem;font-weight:800;color:#94a3b8;text-transform:uppercase;">การบริหารทางกายภาพ:</span>
+                                <p style="font-size:0.7rem;color:#334155;font-weight:600;">ฝึกกระดกข้อมือข้อเท้า หรือเกร็งกล้ามเนื้อตึงสลับหย่อนแบบไม่เคลื่อนข้อต่อเพื่อป้องกันกล้ามฝ่อลีบ</p>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.8rem;border-top:1px solid #f1f5f9;">
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">⛰ Base Level</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="card" style="position:relative;overflow:hidden;border-top:4px solid #2563eb;">
+                        <div style="position:absolute;top:0;right:0;height:3px;width:100%;background:#f1f5f9;">
+                            <div style="height:100%;width:66%;background:#2563eb;"></div>
+                        </div>
+                        <div style="padding-top:0.5rem;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.8rem;border-bottom:2px dashed #f1f5f9;">
+                                <span style="font-size:0.7rem;font-weight:800;color:#2563eb;border:2px solid #2563eb;padding:0.2rem 0.7rem;border-radius:0.3rem;background:#eff6ff;">สัปดาห์ที่ 2 - 6</span>
+                                <span style="font-size:1.2rem;font-weight:900;color:#cbd5e1;">STG 02</span>
+                            </div>
+                            <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin:0.8rem 0;">The Ascent: ดัดยืดพังผืดรั้ง</h3>
+                            <p style="font-size:0.75rem;color:#64748b;line-height:1.5;">ช่วงที่คอลลาเจนขึ้นเกาะซ่อมแผลสะเปะสะปะ ต้องเน้นจัดระเบียบโครงสร้าง ไม่ให้เกาะติดจนข้อติดแข็ง</p>
+                            <div style="background:#f8fafc;padding:0.8rem;border-radius:0.8rem;margin-top:0.8rem;">
+                                <span style="font-size:0.6rem;font-weight:800;color:#94a3b8;text-transform:uppercase;">การบริหารทางกายภาพ:</span>
+                                <p style="font-size:0.7rem;color:#334155;font-weight:600;">นักกายภาพทำการยืดดัด ดึงนวดจุดข้อติด และเสริมสร้างความแกร่งกล้ามเนื้อผ่านยางยืดแรงต้านเบาๆ</p>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.8rem;border-top:1px solid #f1f5f9;">
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">⛰ Ascending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="card" style="position:relative;overflow:hidden;border-top:4px solid #059669;">
+                        <div style="position:absolute;top:0;right:0;height:3px;width:100%;background:#f1f5f9;">
+                            <div style="height:100%;width:100%;background:#059669;"></div>
+                        </div>
+                        <div style="padding-top:0.5rem;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.8rem;border-bottom:2px dashed #f1f5f9;">
+                                <span style="font-size:0.7rem;font-weight:800;color:#059669;border:2px solid #059669;padding:0.2rem 0.7rem;border-radius:0.3rem;background:#ecfdf5;">สัปดาห์ที่ 6+</span>
+                                <span style="font-size:1.2rem;font-weight:900;color:#cbd5e1;">STG 03</span>
+                            </div>
+                            <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin:0.8rem 0;">The Summit: พิชิตความฟิตสูงสุด</h3>
+                            <p style="font-size:0.75rem;color:#64748b;line-height:1.5;">สร้างความทนทาน แรงระเบิดกล้ามเนื้อ สมดุลประสาท และทักษะเฉพาะเจาะจงกีฬาอย่างสมบูรณ์แบบ</p>
+                            <div style="background:#f8fafc;padding:0.8rem;border-radius:0.8rem;margin-top:0.8rem;">
+                                <span style="font-size:0.6rem;font-weight:800;color:#94a3b8;text-transform:uppercase;">การบริหารทางกายภาพ:</span>
+                                <p style="font-size:0.7rem;color:#334155;font-weight:600;">ฝึกการรับรู้ตำแหน่งข้อต่อ ยืนทรงตัวบนอุปกรณ์นิ่มกระเด้ง วิ่งสไลด์ซิกแซกอย่างคล่องตัว</p>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.8rem;border-top:1px solid #f1f5f9;">
+                                <span style="font-size:0.65rem;font-weight:700;color:#94a3b8;">🏔 Summit Reach</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 4: CASE STUDY ==================== -->
+        <section class="slide slide-4" id="slide-4">
+            <div style="max-width:80rem;width:100%;">
+                <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:2.5rem;align-items:center;">
+                    <!-- Left: Virgil Profile -->
+                    <div style="background:#0f172a;border:4px solid white;border-radius:2rem;padding:2rem;color:white;position:relative;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.2);transform:rotate(-1deg);">
+                        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0f172a,#1e293b,transparent);pointer-events:none;"></div>
+                        <div style="position:relative;z-index:2;">
+                            <span class="badge" style="background:#dc2626;color:white;border-color:white;margin-bottom:1rem;">CHAMPION SUMMIT ASCENT</span>
+                            <h3 style="font-size:1.8rem;font-weight:900;color:white;">Virgil van Dijk</h3>
+                            <p style="font-size:0.75rem;color:#cbd5e1;line-height:1.6;margin-top:0.5rem;">
+                                กองหลังกัปตันทีมหงส์แดงลิเวอร์พูล ผู้พิชิตฝันร้ายหัวเข่าพังฉีกขาดระดับ 3 (ACL Tear) ในปี 2020 ผ่านระบบการจัดการฟื้นฟูด้วยสถิติข้อมูล และการดูแลรักษาทางเวชศาสตร์การกีฬาและการกายภาพบำบัดร่วมสหวิชาชีพ
+                            </p>
+                            <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #334155;">
+                                <div style="display:flex;justify-content:space-between;font-size:0.7rem;font-weight:700;margin-bottom:0.5rem;">
+                                    <span style="color:#94a3b8;">ช่วงเวลาฟื้นฟู:</span>
+                                    <span style="color:white;">9 เดือน</span>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:0.7rem;font-weight:700;margin-bottom:0.5rem;">
+                                    <span style="color:#94a3b8;">กลไกหลัก:</span>
+                                    <span style="color:#f87171;font-weight:900;">POLICE (Optimal Loading)</span>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:0.7rem;font-weight:700;">
+                                    <span style="color:#94a3b8;">สถานะปัจจุบัน:</span>
+                                    <span style="color:#34d399;">พิชิตยอดเขาสมบูรณ์แบบ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Timeline -->
+                    <div class="card" style="padding:2rem;">
+                        <h3 style="font-size:1.1rem;font-weight:900;color:#0f172a;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;">
+                            ⏱ ตารางเวลาฝึกปีนยอดเขาแห่งกายภาพฟื้นตัว:
+                        </h3>
+                        <div style="position:relative;padding-left:1.5rem;border-left:2px solid #e2e8f0;">
+                            <div style="margin-bottom:1.2rem;position:relative;">
+                                <div style="position:absolute;left:-1.7rem;top:0.3rem;width:0.8rem;height:0.8rem;background:#dc2626;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #dc2626;"></div>
+                                <div style="background:#fafbfc;padding:0.8rem 1rem;border-radius:0.8rem;border:1px solid #e2e8f0;">
+                                    <span style="font-weight:800;font-size:0.7rem;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;">1-2 สัปดาห์แรก</span>
+                                    <p style="font-size:0.7rem;color:#475569;font-weight:600;">ลดบวม กระตุ้นไฟฟ้าป้องกันกล้ามเนื้อลีบ ฝึกลงน้ำหนักเท้าบางส่วนอย่างเหมาะสม</p>
+                                </div>
+                            </div>
+                            <div style="margin-bottom:1.2rem;position:relative;">
+                                <div style="position:absolute;left:-1.7rem;top:0.3rem;width:0.8rem;height:0.8rem;background:#dc2626;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #dc2626;"></div>
+                                <div style="background:#fafbfc;padding:0.8rem 1rem;border-radius:0.8rem;border:1px solid #e2e8f0;">
+                                    <span style="font-weight:800;font-size:0.7rem;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;">สัปดาห์ที่ 3-12</span>
+                                    <p style="font-size:0.7rem;color:#475569;font-weight:600;">ดัดดึงข้อต่อสะบ้ากันพังผืดเกาะ ปั่นจักรยานสร้างมุมงอเข่า และฝึกความแข็งแรงกล้ามเนื้อสะโพกและแกนกลาง</p>
+                                </div>
+                            </div>
+                            <div style="margin-bottom:1.2rem;position:relative;">
+                                <div style="position:absolute;left:-1.7rem;top:0.3rem;width:0.8rem;height:0.8rem;background:#dc2626;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #dc2626;"></div>
+                                <div style="background:#fafbfc;padding:0.8rem 1rem;border-radius:0.8rem;border:1px solid #e2e8f0;">
+                                    <span style="font-weight:800;font-size:0.7rem;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;">เดือนที่ 4-6</span>
+                                    <p style="font-size:0.7rem;color:#475569;font-weight:600;">เพิ่มโปรแกรมยกน้ำหนักในฟิตเนส วิ่งบนลู่วิ่งต้านแรงโน้มถ่วงพิเศษ (AlterG)</p>
+                                </div>
+                            </div>
+                            <div style="position:relative;">
+                                <div style="position:absolute;left:-1.7rem;top:0.3rem;width:0.8rem;height:0.8rem;background:#dc2626;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #dc2626;"></div>
+                                <div style="background:#fafbfc;padding:0.8rem 1rem;border-radius:0.8rem;border:1px solid #e2e8f0;">
+                                    <span style="font-weight:800;font-size:0.7rem;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;">เดือนที่ 7-9</span>
+                                    <p style="font-size:0.7rem;color:#475569;font-weight:600;">วิ่งซิกแซกหลบกรวย สไลด์ด้านข้าง ฝึกกระโดดโหม่งลงเท้าเดี่ยว และรับการทดสอบสภาวะจิตวิทยา</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 5: TAKEAWAYS ==================== -->
+        <section class="slide slide-5" id="slide-5">
+            <div style="max-width:64rem;width:100%;text-align:center;">
+                <div style="margin-bottom:3rem;">
+                    <span style="font-size:0.7rem;font-weight:800;color:#dc2626;text-transform:uppercase;letter-spacing:0.1em;">CLINICAL TAKEAWAYS</span>
+                    <h2 style="font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:900;color:#0f172a;margin-top:0.5rem;">
+                        สรุปหลักการพิชิตจุดสูงสุดของ<br>การป้องกันและฟื้นตัว
+                    </h2>
+                    <div style="width:3rem;height:3px;background:#dc2626;margin:1rem auto 0;border-radius:2px;"></div>
+                </div>
+
+                <div class="grid-3" style="gap:2rem;">
+                    <!-- Pillar 1 -->
+                    <div class="card" style="text-align:center;padding:2rem;">
+                        <div style="width:3rem;height:3rem;background:#dc2626;border-radius:0.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 8px 20px rgba(220,38,38,0.3);">
+                            <i data-lucide="zap" style="width:1.3rem;height:1.3rem;color:white;"></i>
+                        </div>
+                        <h3 style="font-weight:900;color:#0f172a;font-size:0.95rem;">1. ขยับกระตุ้นฟื้นฟูโดยพลัน</h3>
+                        <p style="font-size:0.75rem;color:#64748b;line-height:1.5;margin-top:0.5rem;">
+                            งดการนอนนิ่งเฉยนานจนข้อต่อยึด แต่ให้เริ่มประยุกต์ใช้แนวทางขยับอย่างฉลาดด้วย Optimal Loading ทันทีเพื่อรักษามัดกล้ามเนื้อ
+                        </p>
+                    </div>
+
+                    <!-- Pillar 2 -->
+                    <div class="card" style="text-align:center;padding:2rem;">
+                        <div style="width:3rem;height:3rem;background:#2563eb;border-radius:0.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 8px 20px rgba(37,99,235,0.3);">
+                            <i data-lucide="check-circle" style="width:1.3rem;height:1.3rem;color:white;"></i>
+                        </div>
+                        <h3 style="font-weight:900;color:#0f172a;font-size:0.95rem;">2. ปล่อยเวลาให้เนื้อเยื่อสร้าง</h3>
+                        <p style="font-size:0.75rem;color:#64748b;line-height:1.5;margin-top:0.5rem;">
+                            เคารพกลไกและขั้นตอนการรักษาตัวตามธรรมชาติของสิ่งมีชีวิต ค่อยเป็นค่อยไป หลีกเลี่ยงแรงดึงดัดกระชากก่อนแผลฉีกปิดดี
+                        </p>
+                    </div>
+
+                    <!-- Pillar 3 -->
+                    <div class="card" style="text-align:center;padding:2rem;">
+                        <div style="width:3rem;height:3rem;background:#0b1c3b;border-radius:0.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 8px 20px rgba(11,28,59,0.3);">
+                            <i data-lucide="award" style="width:1.3rem;height:1.3rem;color:white;"></i>
+                        </div>
+                        <h3 style="font-weight:900;color:#0f172a;font-size:0.95rem;">3. ป้องกันคือเกราะกันภัย</h3>
+                        <p style="font-size:0.75rem;color:#64748b;line-height:1.5;margin-top:0.5rem;">
+                            ความยืดหยุ่น การยืดเหยียด และการอุ่นเครื่อง (Warm-up) คือเกราะป้องกันชั้นยอดที่ไม่นำพาร่างกายไปสู่ความเสียหายบาดเจ็บ
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 6: FOOTER ==================== -->
+        <section class="slide slide-6" id="slide-6">
+            <div style="text-align:center;max-width:48rem;">
+                <div class="swiss-cross swiss-cross-lg animate-pulse-red" style="margin:0 auto 1.5rem;"></div>
+                <h3 style="font-weight:900;color:white;font-size:1.2rem;">
+                    ALPINER SPORTS PHYSICAL THERAPY CLINIC
+                </h3>
+                <p style="font-size:0.8rem;color:#94a3b8;max-width:28rem;margin:0.8rem auto;line-height:1.6;">
+                    ออกแบบสื่อการสอนโดยทีมสุขศึกษาและกายภาพบำบัดส่วนตัวของคุณ เพื่อความมั่นใจ ปลอดภัย และการฟื้นฟูสู่จุดสูงสุดแห่งยอดเขาสมรรถภาพ
+                </p>
+                <div style="width:3rem;height:2px;background:rgba(220,38,38,0.5);margin:1.5rem auto;"></div>
+                <p style="font-size:0.65rem;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">
+                    © 2026 Swiss-Alpine Rehabilitation Presentation Guide
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        const injuriesData = {
+            sprain: {
+                name: 'Sprain (ข้อเท้าแพลง/เอ็นยึด)',
+                desc: 'เกิดกับเอ็นกระดูก (Ligament) ที่ยึดเชื่อมระหว่างกระดูกกับกระดูก มักมีสาเหตุหลักมาจากการบิดหมุนข้อเท้าอย่างรุนแรงกะทันหัน มีความรุนแรงตั้งแต่เส้นใยยืดตัวไปจนถึงฉีกขาดสมบูรณ์',
+                badge: 'แผลฉีกเฉียบพลัน',
+                badgeColor: '#dc2626',
+                img: 'https://images.unsplash.com/photo-1597851065532-055f97d12e47?q=80&w=600&auto=format&fit=crop'
+            },
+            strain: {
+                name: 'Strain (กล้ามเนื้อฉีก/เอ็นตึง)',
+                desc: 'เกิดกับมัดกล้ามเนื้อ (Muscle) หรือเอ็นยึดกล้ามเนื้อ (Tendon) มักเกิดจากการกระชากสปีดตัวรุนแรงในขณะกล้ามเนื้อเย็นตึง เช่น กล้ามเนื้อหลังต้นขา (Hamstring) ฉีกในนักวิ่ง',
+                badge: 'กล้ามเนื้อฉีกขาด',
+                badgeColor: '#2563eb',
+                img: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=600&auto=format&fit=crop'
+            },
+            contusion: {
+                name: 'Contusion (ฟกช้ำปะทะ)',
+                desc: 'เกิดจากการโดนกระแทกโดยตรง (Direct Blow) เช่น หน้าแข้งชนหน้าแข้ง ทำให้เกิดการฉีกขาดของเส้นเลือดฝอยภายในชั้นใต้ผิวหนังและชั้นกล้ามเนื้อลึกจนเป็นห้อเลือดบวมตึง',
+                badge: 'ห้อเลือดใต้ผิว',
+                badgeColor: '#0f172a',
+                img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600&auto=format&fit=crop'
+            },
+            cramp: {
+                name: 'Cramp (ตะคริวล็อค)',
+                desc: 'การหดเกร็งตัวแน่นอย่างรุนแรงของกล้ามเนื้อโดยไม่ได้ตั้งใจ มักเป็นผลมาจากการล้าสะสมของมัดกล้ามเนื้อ การสูญเสียเกลือแร่อย่างหนัก หรือสภาวะขาดน้ำขณะฝึกซ้อม',
+                badge: 'กล้ามเนื้อหดตัวเฉียบพลัน',
+                badgeColor: '#d97706',
+                img: 'https://images.unsplash.com/photo-1502224562085-639556652f33?q=80&w=600&auto=format&fit=crop'
+            }
+        };
+
+        const policeData = {
+            P: {
+                letter: 'P',
+                name: 'Protect (ป้องกันแผล)',
+                desc: 'หยุดเล่นทันที และปกป้องส่วนข้อต่อที่ได้รับบาดเจ็บด้วยเฝือกอ่อน อุปกรณ์ประคองข้อ หรือไม้พยุง เพื่อสกัดกั้นการฉีกขาดของเนื้อเยื่อเสียหายเพิ่มเติม'
+            },
+            OL: {
+                letter: 'OL',
+                name: 'Optimal Loading (กระตุ้นข้อต่อเบาๆ)',
+                desc: 'จุดเปลี่ยนของวงการ! ค่อยๆ เคลื่อนไหวและลงน้ำหนักเท่าที่ทนไหวโดยไม่เจ็บ เพื่อส่งแรงกระตุ้นกลเซลล์เร่งการจัดเรียงสายคอลลาเจนใหม่ให้ไม่กลายเป็นพังผืดแข็งรั้งตัว'
+            },
+            I: {
+                letter: 'I',
+                name: 'Ice (ประคบเย็นกระชับเซลล์)',
+                desc: 'ประคบเย็นจุดเจ็บปวดนาน 15-20 นาที ทุกๆ 2-3 ชั่วโมง เพื่อเหนี่ยวนำให้เส้นเลือดฝอยหดตัว ปิดกั้นอาการบวม และระงับความเจ็บปวดสะสมในชั่วโมงแรก'
+            },
+            C: {
+                letter: 'C',
+                name: 'Compression (รัดผ้ายืดลดอักเสบ)',
+                desc: 'ใช้ผ้าพันเคล็ดชนิดยืดหยุ่นสูง (Elastic Bandage) พันเฉียงสลับฟันปลา ไล่จากทิศทางส่วนปลายอวัยวะกลับขึ้นสู่แกนหัวใจ เพื่อไล่หนองและจำกัดจุดบวมน้ำเลือด'
+            },
+            E: {
+                letter: 'E',
+                name: 'Elevation (ยกรอยข้อต่อให้สูง)',
+                desc: 'จัดท่าทางยกระดับอวัยวะส่วนที่เจ็บไข้ให้สูงกว่าระนาบของหัวใจ เพื่อหนุนอาศัยแรงโน้มถ่วงธรรมชาติช่วยระบายของเหลวที่อุดตันกลับคืนท่อน้ำเหลืองหลัก'
+            }
+        };
+
+        // ==================== FUNCTIONS ====================
+
+        // Select Injury
+        window.selectInjury = function(injuryId, btnElement) {
+            // Update button states
+            document.querySelectorAll('.injury-btn').forEach(b => b.classList.remove('selected'));
+            btnElement.classList.add('selected');
+
+            // Update chevron colors
+            document.querySelectorAll('.injury-btn i[data-lucide="chevron-right"]').forEach(i => {
+                i.style.color = '#94a3b8';
+            });
+            const chevron = btnElement.querySelector('i[data-lucide="chevron-right"]');
+            if (chevron) chevron.style.color = '#dc2626';
+
+            // Update detail card
+            const data = injuriesData[injuryId];
+            document.getElementById('injuryBadge').textContent = data.badge;
+            document.getElementById('injuryBadge').style.background = data.badgeColor;
+            document.getElementById('injuryBadge').style.borderColor = data.badgeColor;
+            document.getElementById('injuryName').textContent = data.name;
+            document.getElementById('injuryDesc').textContent = data.desc;
+            document.getElementById('injuryImg').src = data.img;
+        };
+
+        // Select Police Step
+        window.selectPolice = function(step, btnElement) {
+            // Update button states
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Update detail
+            const data = policeData[step];
+            const detailDiv = document.getElementById('policeDetail');
+            detailDiv.innerHTML = `
+                <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;">
+                    <span style="background:#dc2626;color:white;width:2rem;height:2rem;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.8rem;border:2px solid white;">${data.letter}</span>
+                    <h5 style="font-weight:800;font-size:1rem;">${data.name}</h5>
+                </div>
+                <p style="font-size:0.8rem;color:#475569;line-height:1.6;">${data.desc}</p>
+            `;
+        };
+
+        // ==================== SLIDE NAVIGATION ====================
+        const slidesContainer = document.getElementById('slidesContainer');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const slides = document.querySelectorAll('.slide');
+        const keyboardHint = document.getElementById('keyboardHint');
+
+        let currentSlideIndex = 0;
+        let isScrolling = false;
+
+        // Update active dot based on scroll position
+        function updateActiveDot() {
+            const scrollTop = slidesContainer.scrollTop;
+            const viewHeight = slidesContainer.clientHeight;
+
+            let activeIndex = 0;
+            slides.forEach((slide, index) => {
+                const slideTop = slide.offsetTop;
+                const slideBottom = slideTop + slide.clientHeight;
+
+                if (scrollTop + viewHeight / 2 >= slideTop && scrollTop + viewHeight / 2 < slideBottom) {
+                    activeIndex = index;
+                }
+            });
+
+            currentSlideIndex = activeIndex;
+
+            navDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === activeIndex);
+            });
+
+            // Hide keyboard hint after first scroll
+            if (scrollTop > 100) {
+                keyboardHint.style.opacity = '0';
+                keyboardHint.style.transition = 'opacity 0.5s ease';
+            } else {
+                keyboardHint.style.opacity = '1';
+            }
+        }
+
+        // Scroll to specific slide
+        function scrollToSlide(index) {
+            if (index >= 0 && index < slides.length) {
+                isScrolling = true;
+                slides[index].scrollIntoView({ behavior: 'smooth' });
+                currentSlideIndex = index;
+                
+                navDots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+            }
+        }
+
+        // Click on nav dots
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                scrollToSlide(slideIndex);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSlideIndex < slides.length - 1) {
+                    scrollToSlide(currentSlideIndex + 1);
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlideIndex > 0) {
+                    scrollToSlide(currentSlideIndex - 1);
+                }
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                scrollToSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                scrollToSlide(slides.length - 1);
+            }
+        });
+
+        // Touch/Mouse scroll handling
+        let scrollTimeout;
+        slidesContainer.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    updateActiveDot();
+                }, 100);
+            }
+            updateActiveDot();
+        });
+
+        // Initialize
+        updateActiveDot();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
